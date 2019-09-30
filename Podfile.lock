@@ -1,0 +1,20 @@
+PODS:
+  - GRMustache (7.3.2):
+    - JRSwizzle (~> 1.0)
+  - JRSwizzle (1.0)
+
+DEPENDENCIES:
+  - GRMustache
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - GRMustache
+    - JRSwizzle
+
+SPEC CHECKSUMS:
+  GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+
+PODFILE CHECKSUM: 7ad104bd8fe29349c76c6b4f82c9544c3c425b35
+
+COCOAPODS: 1.7.5
