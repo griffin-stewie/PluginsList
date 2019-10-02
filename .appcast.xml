@@ -1,19 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
     <title>PluginsList</title>
     <description>This Sketch plugin gives you exporting list of plugins as text.</description>
     <language>en</language>
-      <item>
-        <title>Version 0.1.0</title>
-        <description>
-          <![CDATA[
-            <ul>
-              <li>First release!</li>
-            </ul>
-          ]]>
+    <item>
+      <enclosure url="https://github.com/griffin-stewie/PluginsList/releases/download/v0.1.1/PluginList.sketchplugin.zip" sparkle:version="0.1.1"/>
+    </item>
+    <item>
+      <title>Version 0.1.0</title>
+      <description>
+          
+            &lt;ul&gt;
+              &lt;li&gt;First release!&lt;/li&gt;
+            &lt;/ul&gt;
+          
         </description>
-        <enclosure url="https://github.com/griffin-stewie/PluginsList/releases/download/v0.1.0/PluginsList.sketchplugin.zip" sparkle:version="0.1.0" />
-      </item>
+      <enclosure url="https://github.com/griffin-stewie/PluginsList/releases/download/v0.1.0/PluginsList.sketchplugin.zip" sparkle:version="0.1.0"/>
+    </item>
   </channel>
 </rss>
