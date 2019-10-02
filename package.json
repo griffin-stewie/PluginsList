@@ -5,5 +5,6 @@
     "main": "PluginsList.sketchplugin",
     "repository": "https://github.com/griffin-stewie/PluginsList",
     "description": "Sketch Plugin that gives you list of plugins you enabled as several text formats."
-  }
+  },
+  "version": "0.1.4"
 }
