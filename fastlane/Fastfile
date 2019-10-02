@@ -106,6 +106,6 @@ platform :mac do
     plugin_compressed_path = "#{plugin_dir}.zip"
     FileUtils.rm_f(plugin_compressed_path)
 
-    sh("skpm publish #{options[:bump]}")
+    sh("cd .. && skpm publish #{options[:bump]} && cd -")
   end
 end

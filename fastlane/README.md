@@ -36,6 +36,11 @@ Package plugin, building framework unless provided
 fastlane mac install
 ```
 Package and install plugin to Sketch
+### mac publish
+```
+fastlane mac publish bump:[<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
+```
+Publish and Package
 
 ----
 
