@@ -38,9 +38,13 @@ fastlane mac install
 Package and install plugin to Sketch
 ### mac publish
 ```
-fastlane mac publish bump:[<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
+fastlane mac publish
 ```
 Publish and Package
+
+bump options => [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
+
+See `npm help version`
 
 ----
 

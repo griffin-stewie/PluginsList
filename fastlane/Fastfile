@@ -96,11 +96,10 @@ platform :mac do
   end
 
   desc "Publish and Package"
+  desc "bump options => [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]"
+  desc "See `npm help version`"
   lane :publish do |options|
     fastlane_require "fileutils"
-
-    # bump options => [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
-    # See `npm help version`
 
     plugin_dir = package(options)
     plugin_compressed_path = "#{plugin_dir}.zip"
