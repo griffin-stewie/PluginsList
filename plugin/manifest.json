@@ -4,7 +4,7 @@
     "author": "griffin-stewie",
     "homepage": "https://github.com/griffin-stewie/PluginsList",
     "version": "0.1.0",
-    "identifier": "net.cyan-stivy.sketchPlugin.PluginsList",
+    "identifier": "net.cyan-stivy.sketch-plugin.PluginsList",
     "icon": "icon.png",
     "appcast": "https://raw.githubusercontent.com/griffin-stewie/PluginsList/master/.appcast.xml",
     "compatibleVersion": 3,
