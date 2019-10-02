@@ -53,7 +53,10 @@
 
 - (NSString *)renderWithPluginModels:(NSArray<PISPluginModel *> *)plugins error:(NSError **)error
 {
-    GRMustacheTemplate *template = [GRMustacheTemplate templateFromContentsOfURL:[self templateURL] error:error];
+    NSURL *url = [self templateURL];
+    GRMustacheTemplate *template = [GRMustacheTemplate templateFromContentsOfURL:url error:error];
+
+    NSLog(@"🤡 %s URL:%@ error:%@", __PRETTY_FUNCTION__, [url absoluteString], [*error description]);
 
     if (*error != nil) {
         return nil;
