@@ -113,7 +113,7 @@ platform :mac do
     if version.empty? then
       UI.error 'version is empty'
       next # skip doing the rest of this lane
-    end 
+    end
 
     puts "Current version in manifest.json is #{version}"
 
