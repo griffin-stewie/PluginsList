@@ -102,7 +102,7 @@ platform :mac do
 
     plugin_dir = package(options)
     plugin_compressed_path = "#{plugin_dir}.zip"
-    FileUtils.cp_r(plugin_dir, "..")
+    FileUtils.cp_r(plugin_dir, "..", {:remove_destination => true})
 
     version = ""
     File.open("../plugin/manifest.json") do |j|
