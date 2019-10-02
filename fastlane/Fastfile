@@ -94,4 +94,18 @@ platform :mac do
     FileUtils.rm_f(plugin_link)
     FileUtils.ln_s(plugin_dir, plugin_link)
   end
+
+  desc "Publish and Package"
+  lane :publish do |options|
+    fastlane_require "fileutils"
+
+    # bump options => [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
+    # See `npm help version`
+
+    plugin_dir = package(options)
+    plugin_compressed_path = "#{plugin_dir}.zip"
+    FileUtils.rm_f(plugin_compressed_path)
+
+    sh("skpm publish #{options[:bump]}")
+  end
 end
