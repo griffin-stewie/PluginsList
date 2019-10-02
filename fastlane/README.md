@@ -42,10 +42,6 @@ fastlane mac publish
 ```
 Publish and Package
 
-bump options => [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
-
-See `npm help version`
-
 ----
 
 This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.

@@ -96,17 +96,24 @@ platform :mac do
   end
 
   desc "Publish and Package"
-  desc "bump options => [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]"
-  desc "See `npm help version`"
   lane :publish do |options|
     fastlane_require "fileutils"
+    fastlane_require "json"
 
     plugin_dir = package(options)
     plugin_compressed_path = "#{plugin_dir}.zip"
-    FileUtils.rm_f(plugin_compressed_path)
     FileUtils.cp_r(plugin_dir, "..")
 
-    sh("cd .. && skpm publish #{options[:bump]} && cd -")
+    version = ""
+    File.open("../plugin/manifest.json") do |j|
+      hash = JSON.load(j)
+      version = hash["version"]
+    end
+
+    puts "Current version in manifest.json is #{version}"
+
+    sh("cd .. && skpm publish #{version} && cd -")
+
     FileUtils.rm_rf(File.join("..", PLUGIN_NAME))
   end
 end
