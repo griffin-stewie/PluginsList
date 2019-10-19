@@ -210,7 +210,7 @@ platform :mac do
       UI.message('Querying request status')
 
       notarization_info_response = Actions.sh(
-        "xcrun altool --notarization-info #{notarization_request_id} -u #{apple_id_account.user} -p @env:FL_NOTARIZE_PASSWORD --output-format xml",
+        "xcrun altool --notarization-info #{notarization_request_id} -u #{username} -p #{password} --output-format xml",
         log: false
       )
 
