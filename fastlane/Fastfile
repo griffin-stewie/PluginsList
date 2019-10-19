@@ -192,17 +192,6 @@ platform :mac do
     while notarization_info.empty? || (notarization_info['Status'] == 'in progress')
       if notarization_info.empty?
         UI.message('Waiting to query request status')
-      elsif try_early_stapling
-        UI.message('Request in progress, trying early staple')
-
-        begin
-          self.staple(package_path)
-          UI.message('Successfully notarized and early stapled package.')
-
-          return
-        rescue
-          UI.message('Early staple failed, waiting to query again')
-        end
       end
 
       sleep(30)
