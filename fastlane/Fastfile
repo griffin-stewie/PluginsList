@@ -124,8 +124,6 @@ platform :mac do
 
   desc "Notarize"
   lane :notarize_plugin do |options|
-    UI.user_error! "Something went wrong"
-    next
     fastlane_require "fileutils"
     fastlane_require "json"
     fastlane_require "yaml"
@@ -217,11 +215,7 @@ platform :mac do
 
     case notarization_info['Status']
     when 'success'
-      UI.message('Stapling package')
-
-      sh("xcrun stapler staple \"#{zipfile}\"")
-
-      UI.success("Successfully notarized and stapled package#{log_suffix}")
+      UI.success("Successfully notarized#{log_suffix}")
     when 'invalid'
       UI.user_error!("Could not notarize package with message '#{notarization_info['Status Message']}'#{log_suffix}")
     else
