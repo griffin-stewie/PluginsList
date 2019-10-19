@@ -117,9 +117,7 @@ platform :mac do
 
     puts "Current version in manifest.json is #{version}"
 
-    sh("cd .. && skpm publish #{version} && cd -")
-
-    FileUtils.rm_rf(File.join("..", PLUGIN_NAME))
+    UI.success("Ready to publish. Run command bellow:\nskpm publish #{version}")
   end
 
   desc "Notarize"
