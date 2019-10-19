@@ -129,6 +129,7 @@ platform :mac do
     fastlane_require "yaml"
     fastlane_require "zip"
     fastlane_require "plist"
+    fastlane_require "pp"
 
     skpmrc = YAML.load_file("../.skpmrc")
     notarization = skpmrc["notarization"]
@@ -142,10 +143,6 @@ platform :mac do
     Zip::File.open(zipfile) do |zip_file|
       # Handle entries one by one
       zip_file.each do |entry|
-        # Extract to file/directory/symlink
-        puts "Extracting #{entry.name}"
-        # entry.extract(dest_file)
-
         if entry.name.end_with?("Info.plist") then
           # Read into memory
           entry.get_input_stream do |a|
@@ -161,13 +158,28 @@ platform :mac do
       next # skip doing the rest of this lane
     end
 
-    puts bundleID
-
-    notarization_info_response = sh("
+    notarization_info_response = `
       xcrun altool --notarize-app -f #{zipfile} --primary-bundle-id \"#{bundleID}\" -u \"#{username}\" -p \"#{password}\" --output-format xml
-    ")
-
+    `
+    # pp notarization_info_response
     notarization_info_plist = Plist.parse_xml(notarization_info_response)
+
+    if $? != 0 then
+      if notarization_info_plist.nil? then
+          UI.user_error! "Something went wrong"
+        next
+      end
+
+      errors = notarization_info_plist["product-errors"]
+      unless errors.nil? || errors.empty? then
+        errors.each do |e|
+          UI.error e["message"]
+        end
+        UI.user_error! "Error"
+        next
+      end
+    end
+
     notarization_info = notarization_info_plist['notarization-info']
 
     log_url = notarization_info['LogFileURL']
