@@ -1,0 +1,5 @@
+notarization:
+  command: './Scripts/notarize-plugin.sh'
+  authority: 'Developer ID Application: XXXXXX'
+  username: 'XXXXXX'
+  password: '@keychain:AC_PASSWORD'
