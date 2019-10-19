@@ -180,6 +180,8 @@ platform :mac do
       end
     end
 
+    pp notarization_info_plist
+
     notarization_info = notarization_info_plist['notarization-info']
 
     log_url = notarization_info['LogFileURL']
