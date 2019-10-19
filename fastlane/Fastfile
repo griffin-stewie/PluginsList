@@ -99,13 +99,13 @@ platform :mac do
   lane :publish do |options|
     fastlane_require "fileutils"
     fastlane_require "json"
+    fastlane_require "yaml"
 
     plugin_dir = package(options)
-    plugin_compressed_path = "#{plugin_dir}.zip"
     FileUtils.cp_r(plugin_dir, "..", {:remove_destination => true})
 
     version = ""
-    File.open("../plugin/manifest.json") do |j|
+    File.open("#{plugin_dir}/Contents/Sketch/manifest.json") do |j|
       hash = JSON.load(j)
       version = hash["version"]
     end
@@ -120,5 +120,75 @@ platform :mac do
     sh("cd .. && skpm publish #{version} && cd -")
 
     FileUtils.rm_rf(File.join("..", PLUGIN_NAME))
+  end
+
+  desc "Notarize"
+  lane :notarize_plugin do |options|
+    fastlane_require "fileutils"
+    fastlane_require "json"
+    fastlane_require "yaml"
+    fastlane_require "zip"
+    fastlane_require "plist"
+
+    skpmrc = YAML.load_file("../.skpmrc")
+    notarization = skpmrc["notarization"]
+
+    username = notarization["username"]
+    password =  notarization["password"]
+
+    zipfile = "../#{options[:zip]}"
+
+    bundleID = ""
+    Zip::File.open(zipfile) do |zip_file|
+      # Handle entries one by one
+      zip_file.each do |entry|
+        # Extract to file/directory/symlink
+        puts "Extracting #{entry.name}"
+        # entry.extract(dest_file)
+
+        if entry.name.end_with?("Info.plist") then
+          # Read into memory
+          entry.get_input_stream do |a|
+            result = Plist.parse_xml(a)
+            bundleID = result["CFBundleIdentifier"]
+          end
+        end
+      end
+    end
+
+    if bundleID.empty? then
+      UI.error 'bundleID is empty'
+      next # skip doing the rest of this lane
+    end
+
+    puts bundleID
+
+    notarization_info_response = sh("
+      xcrun altool --notarize-app -f #{zipfile} --primary-bundle-id \"#{bundleID}\" -u \"#{username}\" -p \"#{password}\"
+    ")
+
+    notarization_info_plist = Plist.parse_xml(notarization_info_response)
+    notarization_info = notarization_info_plist['notarization-info']
+
+    log_url = notarization_info['LogFileURL']
+    log_suffix = ''
+    if log_url
+      log_response = Net::HTTP.get(URI(log_url))
+      log_json_object = JSON.parse(log_response)
+      log_suffix = ", with log:\n#{JSON.pretty_generate(log_json_object)}"
+    end
+
+    case notarization_info['Status']
+    when 'success'
+      UI.message('Stapling package')
+
+      sh("xcrun stapler staple \"#{package_path}\"")
+
+      UI.success("Successfully notarized and stapled package#{log_suffix}")
+    when 'invalid'
+      UI.user_error!("Could not notarize package with message '#{notarization_info['Status Message']}'#{log_suffix}")
+    else
+      UI.crash!("Could not notarize package with status '#{notarization_info['Status']}'#{log_suffix}")
+    end
   end
 end

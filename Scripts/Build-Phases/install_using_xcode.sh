@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ -n "$BUILD_FROM_FASTLANE" ]; then
     echo "Build from fastlane. skip execute Install plugin phase."

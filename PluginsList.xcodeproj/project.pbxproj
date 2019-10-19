@@ -571,7 +571,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh Build-Phases/install_using_xcode.sh\necho $env\n";
+			shellScript = "sh Scripts/Build-Phases/install_using_xcode.sh\necho $env\n";
 		};
 		EEA22DBCAC167876FD0699AB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -762,6 +762,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = P35U7ALH46;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -786,9 +787,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AF990549B739C04E9A03AD1B /* Pods-PluginsList.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = P35U7ALH46;
 				DYLIB_COMPATIBILITY_VERSION = 1;
