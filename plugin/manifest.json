@@ -3,7 +3,7 @@
     "description": "Export list of plugins as text",
     "author": "griffin-stewie",
     "homepage": "https://github.com/griffin-stewie/PluginsList",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "identifier": "net.cyan-stivy.sketch-plugin.PluginsList",
     "icon": "icon.png",
     "appcast": "https://raw.githubusercontent.com/griffin-stewie/PluginsList/master/.appcast.xml",
