@@ -164,7 +164,7 @@ platform :mac do
     puts bundleID
 
     notarization_info_response = sh("
-      xcrun altool --notarize-app -f #{zipfile} --primary-bundle-id \"#{bundleID}\" -u \"#{username}\" -p \"#{password}\ --output-format xml"
+      xcrun altool --notarize-app -f #{zipfile} --primary-bundle-id \"#{bundleID}\" -u \"#{username}\" -p \"#{password}\ --output-format xml
     ")
 
     notarization_info_plist = Plist.parse_xml(notarization_info_response)
