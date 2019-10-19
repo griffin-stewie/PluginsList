@@ -160,19 +160,19 @@ platform :mac do
       next # skip doing the rest of this lane
     end
 
-    notarization_info_response = `
+    notarization_upload_response = `
       xcrun altool --notarize-app -f #{zipfile} --primary-bundle-id \"#{bundleID}\" -u \"#{username}\" -p \"#{password}\" --output-format xml
     `
     # pp notarization_info_response
-    notarization_info_plist = Plist.parse_xml(notarization_info_response)
+    notarization_upload_plist = Plist.parse_xml(notarization_upload_response)
 
     if $? != 0 then
-      if notarization_info_plist.nil? then
+      if notarization_upload_plist.nil? then
           UI.user_error! "Something went wrong"
         next
       end
 
-      errors = notarization_info_plist["product-errors"]
+      errors = notarization_upload_plist["product-errors"]
       unless errors.nil? || errors.empty? then
         errors.each do |e|
           UI.error e["message"]
@@ -182,9 +182,41 @@ platform :mac do
       end
     end
 
-    UI.message notarization_info_plist
+    UI.message notarization_upload_plist
 
-    notarization_info = notarization_info_plist['notarization-info']
+    notarization_request_id = notarization_upload_plist['notarization-upload']['RequestUUID']
+
+    UI.success("Successfully uploaded package to notarization service with request identifier #{notarization_request_id}")
+
+    notarization_info = {}
+    while notarization_info.empty? || (notarization_info['Status'] == 'in progress')
+      if notarization_info.empty?
+        UI.message('Waiting to query request status')
+      elsif try_early_stapling
+        UI.message('Request in progress, trying early staple')
+
+        begin
+          self.staple(package_path)
+          UI.message('Successfully notarized and early stapled package.')
+
+          return
+        rescue
+          UI.message('Early staple failed, waiting to query again')
+        end
+      end
+
+      sleep(30)
+
+      UI.message('Querying request status')
+
+      notarization_info_response = Actions.sh(
+        "xcrun altool --notarization-info #{notarization_request_id} -u #{apple_id_account.user} -p @env:FL_NOTARIZE_PASSWORD --output-format xml",
+        log: false
+      )
+
+      notarization_info_plist = Plist.parse_xml(notarization_info_response)
+      notarization_info = notarization_info_plist['notarization-info']
+    end
 
     log_url = notarization_info['LogFileURL']
     log_suffix = ''
