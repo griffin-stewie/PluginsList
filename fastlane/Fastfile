@@ -55,9 +55,6 @@ platform :mac do
     plugin_dir = File.join(build_dir, PLUGIN_NAME)
     FileUtils.rm_rf(plugin_dir)
 
-    plugin_compressed_path = "#{plugin_dir}.zip"
-    FileUtils.rm_f(plugin_compressed_path)
-
     FileUtils.mkdir_p(plugin_dir)
 
     contents_dir = File.join(plugin_dir, "Contents")
@@ -79,10 +76,21 @@ platform :mac do
     FileUtils.cp("../plugin/manifest.json", sketch_dir)
     FileUtils.cp("../plugin/src/index.js", sketch_dir)
 
-    sh("ditto -c -k --rsrc --keepParent \"#{plugin_dir}\" \"#{plugin_compressed_path}\"")
-
     plugin_dir
   end
+
+  desc "Package plugin, and zip it"
+  lane :zipped_package do |options|
+    fastlane_require "fileutils"
+    plugin_dir = package(options)
+    FileUtils.rm_rf(plugin_dir)
+    plugin_compressed_path = "#{plugin_dir}.zip"
+    FileUtils.rm_f(plugin_compressed_path)
+    sh("ditto -c -k --rsrc --keepParent \"#{plugin_dir}\" \"#{plugin_compressed_path}\"")
+    puts plugin_compressed_path
+    plugin_compressed_path
+  end
+
 
   desc "Package and install plugin to Sketch"
   lane :install do |options|
@@ -135,7 +143,7 @@ platform :mac do
     username = notarization["username"]
     password =  notarization["password"]
 
-    zipfile = "../#{options[:zip]}"
+    zipfile = File.expand_path(options[:zip], "..")
 
     bundleID = ""
     Zip::File.open(zipfile) do |zip_file|
