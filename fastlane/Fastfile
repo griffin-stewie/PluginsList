@@ -83,7 +83,6 @@ platform :mac do
   lane :zipped_package do |options|
     fastlane_require "fileutils"
     plugin_dir = package(options)
-    FileUtils.rm_rf(plugin_dir)
     plugin_compressed_path = "#{plugin_dir}.zip"
     FileUtils.rm_f(plugin_compressed_path)
     sh("ditto -c -k --rsrc --keepParent \"#{plugin_dir}\" \"#{plugin_compressed_path}\"")
