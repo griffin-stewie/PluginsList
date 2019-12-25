@@ -31,6 +31,11 @@ Build framework
 fastlane mac package
 ```
 Package plugin, building framework unless provided
+### mac zipped_package
+```
+fastlane mac zipped_package
+```
+Package plugin, and zip it
 ### mac install
 ```
 fastlane mac install
