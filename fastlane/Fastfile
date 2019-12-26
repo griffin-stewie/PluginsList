@@ -111,7 +111,8 @@ platform :mac do
     fastlane_require "yaml"
 
     plugin_dir = package(options)
-    FileUtils.cp_r(plugin_dir, "..", {:remove_destination => true})
+    plugin_compressed_path = "#{plugin_dir}.zip"
+    FileUtils.rm_f(plugin_compressed_path)
 
     version = ""
     File.open("#{plugin_dir}/Contents/Sketch/manifest.json") do |j|
