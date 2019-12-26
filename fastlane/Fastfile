@@ -2,12 +2,12 @@ default_platform(:mac)
 
 # When you use CocoaPods, Go to File -> Workspace Settings -> Advanced and select Legacy  https://stackoverflow.com/questions/29731884/xcode-build-setting-build-products-path-configuration-build-dir-is-a-lie
 
-BUILD_DIR = "build"
 FRAMEWORK_NAME = "PluginsList.framework"
 LIB_NAME = "libPods-PluginsList.a"
 PLUGIN_NAME = "PluginsList.sketchplugin"
 WORKSPACE = "PluginsList.xcworkspace"
 SCHEME = "PluginsList"
+DERIVED_DATA_PATH = "DerivedData"
 
 # Xcode の Workspace Settings で Advanced.... から Legacy を選択すること
 
@@ -21,10 +21,11 @@ platform :mac do
       scheme: SCHEME,
       configuration: configuration,
       workspace: WORKSPACE,
-      xcargs: "BUILD_FROM_FASTLANE=true"
+      xcargs: "BUILD_FROM_FASTLANE=true",
+      derivedDataPath: DERIVED_DATA_PATH
     )
 
-    File.expand_path(File.join("..", BUILD_DIR, configuration))
+    File.expand_path(File.join("..", DERIVED_DATA_PATH, "Build", "Products", configuration))
   end
 
 
@@ -37,10 +38,11 @@ platform :mac do
       scheme: SCHEME,
       configuration: configuration,
       workspace: WORKSPACE,
+      derivedDataPath: DERIVED_DATA_PATH,
       xcargs: "BUILD_FROM_FASTLANE=true"
     )
 
-    File.expand_path(File.join("..", BUILD_DIR, configuration))
+    File.expand_path(File.join("..", DERIVED_DATA_PATH, "Build", "Products", configuration))
   end
 
   desc "Package plugin, building framework unless provided"
@@ -52,7 +54,7 @@ platform :mac do
       build_dir = build
     end
 
-    plugin_dir = File.join(build_dir, PLUGIN_NAME)
+    plugin_dir = File.join("..", PLUGIN_NAME)
     FileUtils.rm_rf(plugin_dir)
 
     FileUtils.mkdir_p(plugin_dir)
