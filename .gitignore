@@ -1,8 +1,16 @@
-/fastlane/report.xml
-/vendor
-./build
-/Pods
-/.skpmrc
-/PluginsList.sketchplugin
-/PluginsList.sketchplugin.zip
-/DerivedData
+# build artifacts
+pluginsnamelist.sketchplugin
+
+# npm
+node_modules
+.npm
+npm-debug.log
+
+# mac
+.DS_Store
+
+# WebStorm
+.idea
+
+# sketch
+# sketch-assets

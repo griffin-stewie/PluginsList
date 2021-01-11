@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/BohemianCoding/SketchAPI/develop/docs/sketch-plugin-manifest-schema.json",
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Export as CSV",
+      "identifier": "net.cyan-stivy.sketchPlugin.export-as-csv",
+      "handler": "exportAsCSV",
+      "script": "./main.js"
+    },
+    {
+      "name": "Export as Markdown Table",
+      "identifier": "net.cyan-stivy.sketchPlugin.export-as-markdown-table",
+      "handler": "exportAsMarkdownTable",
+      "script": "./main.js"
+    },
+    {
+      "name": "Export as Backlog Table",
+      "identifier": "net.cyan-stivy.sketchPlugin.export-as-backlog-table",
+      "handler": "exportAsBacklogTable",
+      "script": "./main.js"
+    }
+  ],
+  "menu": {
+    "title": "Plugin List",
+    "items": [
+      "net.cyan-stivy.sketchPlugin.export-as-csv",
+      "net.cyan-stivy.sketchPlugin.export-as-markdown-table",
+      "net.cyan-stivy.sketchPlugin.export-as-backlog-table"
+    ]
+  }
+}
