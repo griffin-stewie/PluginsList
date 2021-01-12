@@ -40,15 +40,6 @@ export function exportAlert(options) {
   const copyButton = alert.addButtonWithTitle("Copy to pasteboard");
   copyButton.setEnabled(options.isClipboardAvailable);
   copyButton.tag = CopyButtonTag;
-  // const accessory = NSPopUpButton.alloc().initWithFrame_pullsDown(NSMakeRect(0, 0, 400, 25), false)
-  // accessory.addItemsWithTitles(options.names)
-  // accessory.selectItemAtIndex(0)
-  // accessory.setCOSJSTargetFunction(sender => {
-  //   log(sender)
-  //   log(copyButton)
-  // })
-  // alert.setAccessoryView(accessory);
-
   alert.addButtonWithTitle("Cancel");
 
   return alert;
