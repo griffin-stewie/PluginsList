@@ -1,5 +1,5 @@
 # build artifacts
-pluginsnamelist.sketchplugin
+PluginsList.sketchplugin
 
 # npm
 node_modules
