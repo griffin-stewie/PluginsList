@@ -34,7 +34,6 @@ export function showSaveDirectoryDialog(params) {
 export function exportAlert(options) {
   const alert = NSAlert.alloc().init()
   alert.setMessageText("Export Plugin Informations")
-  alert.setInformativeText("Select the format:")
   alert.icon = options.alertIcon
   alert.addButtonWithTitle("Save to file...");
 
