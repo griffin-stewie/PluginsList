@@ -1,7 +1,7 @@
 {
   "description": "Sketch Plugin that gives you list of plugins you enabled as several text formats.",
   "name": "pluginlist",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "engines": {
     "sketch": ">=49.0"
   },
