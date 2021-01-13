@@ -60,7 +60,8 @@ function exportAs(context,option) {
     return {
       "name": plugin.name(),
       "version": plugin.version(),
-      "homepageURL": plugin.homepageURL()
+      "homepageURL": plugin.homepageURL(),
+      "author": plugin.author()
     }
   })
 
@@ -72,7 +73,7 @@ function exportAs(context,option) {
   });
 
   log(rendered)
-  
+
   switch (responseCode) {
     case ui.SaveToFileButtonTag:
       const destinationURL = ui.showSaveFileDialog(option.defaultFileName)
