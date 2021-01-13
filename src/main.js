@@ -10,7 +10,6 @@ export function exportAsMarkdownTable(context) {
     "mustacheTemplateFilePath": "Templates/markdown_table.mustache",
     "defaultFileName": "plugin_informations.md",
     "escapeFunction": (text) => {
-      log(text)
       return String(text).replaceAll('|', '\\|')
     }
   }
@@ -23,7 +22,6 @@ export function exportAsCSV(context) {
     "mustacheTemplateFilePath": "Templates/csv.mustache",
     "defaultFileName": "plugin_informations.csv",
     "escapeFunction": (text) => {
-      log(text)
       return String(text).replaceAll('"', '""')
     }
   }
@@ -36,7 +34,6 @@ export function exportAsBacklogTable(context) {
     "mustacheTemplateFilePath": "Templates/backlog_table.mustache",
     "defaultFileName": "plugin_informations.txt",
     "escapeFunction": (text) => {
-      log(text)
       return String(text).replaceAll('|', '\\\\|')
     }
   }
