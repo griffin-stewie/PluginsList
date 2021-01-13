@@ -55,14 +55,7 @@ function exportAs(context,option) {
   const manager = AppController.sharedInstance().pluginManager();
   const templateURL = context.plugin.urlForResourceNamed(option.mustacheTemplateFilePath)
   const template = fs.readFileSync(templateURL.path())
-  let plugins = manager.enabledPlugins()
-  plugins.sortUsingComparator(__mocha__.createBlock_function('v24@?0@8@16', (lhs, rhs) => {
-    const lhsName = NSString.stringWithString(lhs.name())
-    const rhsName = NSString.stringWithString(rhs.name())
-    const result = lhsName.compare(rhsName);
-    return result
-  }))
-
+  const plugins = manager.enabledPlugins()
   const mappedPlugins = Array.from(plugins).map(plugin => {
     return {
       "name": plugin.name(),
@@ -71,6 +64,7 @@ function exportAs(context,option) {
     }
   })
 
+  mappedPlugins.sort((a, b) => a.name > b.name)
   mustache.escape = option.escapeFunction
 
   const rendered = mustache.render(`${template}`, {
