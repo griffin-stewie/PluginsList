@@ -10,7 +10,6 @@ export function exportAsMarkdownTable(context) {
     "mustacheTemplateFilePath": "Templates/markdown_table.mustache",
     "defaultFileName": "plugin_informations.md",
     "escapeFunction": (text) => {
-      log(text)
       return String(text).replaceAll('|', '\\|')
     }
   }
@@ -23,7 +22,6 @@ export function exportAsCSV(context) {
     "mustacheTemplateFilePath": "Templates/csv.mustache",
     "defaultFileName": "plugin_informations.csv",
     "escapeFunction": (text) => {
-      log(text)
       return String(text).replaceAll('"', '""')
     }
   }
@@ -36,7 +34,6 @@ export function exportAsBacklogTable(context) {
     "mustacheTemplateFilePath": "Templates/backlog_table.mustache",
     "defaultFileName": "plugin_informations.txt",
     "escapeFunction": (text) => {
-      log(text)
       return String(text).replaceAll('|', '\\\\|')
     }
   }
@@ -58,7 +55,7 @@ function exportAs(context,option) {
   const manager = AppController.sharedInstance().pluginManager();
   const templateURL = context.plugin.urlForResourceNamed(option.mustacheTemplateFilePath)
   const template = fs.readFileSync(templateURL.path())
-  const plugins = manager.enabledPlugins();
+  const plugins = manager.enabledPlugins()
   const mappedPlugins = Array.from(plugins).map(plugin => {
     return {
       "name": plugin.name(),
@@ -67,6 +64,7 @@ function exportAs(context,option) {
     }
   })
 
+  mappedPlugins.sort((a, b) => a.name > b.name)
   mustache.escape = option.escapeFunction
 
   const rendered = mustache.render(`${template}`, {
