@@ -44,7 +44,19 @@ export function exportAsBacklogTable(context) {
 }
 
 export function exportUsingCustomTemplate(context) {
+  const fileURL = ui.showSelectFileDialog();
+  if (fileURL === null || fileURL === undefined) {
+    return ;
+  }
+
+  const option = {
+    "isClipboardAvailable": true,
+    "mustacheTemplateFileURL": fileURL.URLByStandardizingPath(),
+    "defaultFileName": "plugin_informations.txt"
+  }
+  exportAs(context, option);
 }
+
 /* ---------------- */
 
 function exportAs(context,option) {
@@ -71,7 +83,11 @@ function exportAs(context,option) {
   })
 
   mappedPlugins.sort((a, b) => a.name > b.name)
-  mustache.escape = option.escapeFunction
+
+  if (option.escapeFunction === undefined || option.escapeFunction === null) {
+  } else {
+    mustache.escape = option.escapeFunction;
+  }
 
   const rendered = mustache.render(`${template}`, {
     "plugins": mappedPlugins
