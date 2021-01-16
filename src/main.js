@@ -40,6 +40,8 @@ export function exportAsBacklogTable(context) {
   exportAs(context, option);
 }
 
+export function exportUsingCustomTemplate(context) {
+}
 /* ---------------- */
 
 function exportAs(context,option) {
