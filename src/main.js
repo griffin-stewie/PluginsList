@@ -75,10 +75,19 @@ function exportAs(context,option) {
   const plugins = manager.enabledPlugins()
   const mappedPlugins = Array.from(plugins).map(plugin => {
     return {
-      "name": plugin.name(),
-      "version": plugin.version(),
+      "appcastURL": plugin.appcastURL(),
+      "author": plugin.author(),
+      "authorEmail": plugin.authorEmail(),
+      "compatibleVersion": plugin.compatibleVersion(),
+      "enabled": plugin.enabled,
       "homepageURL": plugin.homepageURL(),
-      "author": plugin.author()
+      "identifier": plugin.identifier(),
+      "maximumCompatibleVersion": plugin.maximumCompatibleVersion(),
+      "name": plugin.name(),
+      "pluginDescription": plugin.pluginDescription(),
+      "suppliesData": plugin.suppliesData(),
+      "url": plugin.url(),
+      "version": plugin.version(),
     }
   })
 
