@@ -17,7 +17,7 @@ export function showSaveFileDialog(defaultFileName) {
 
 export function showSelectFileDialog(params) {
   const panel = NSOpenPanel.openPanel()
-  panel.prompt = "Template"
+  panel.prompt = "Select"
   panel.message = "Select your custom template"
   panel.canChooseFiles = true
   panel.canChooseDirectories = false
