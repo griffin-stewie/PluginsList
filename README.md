@@ -9,6 +9,7 @@ Easy to share plugin informations that you use to your team.
 - CSV
 - Markdown Table
 - [Backlog](https://backlog.com) Table
+- [Your custom template](https://github.com/griffin-stewie/PluginsList#customizing-template)
 
 ## Install
 
