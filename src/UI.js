@@ -15,6 +15,22 @@ export function showSaveFileDialog(defaultFileName) {
   return null
 }
 
+export function showSelectFileDialog(params) {
+  const panel = NSOpenPanel.openPanel()
+  panel.prompt = "Select"
+  panel.message = "Select your custom template"
+  panel.canChooseFiles = true
+  panel.canChooseDirectories = false
+  panel.allowsMultipleSelection = false
+  panel.canCreateDirectories = false
+
+  if (panel.runModal()) {
+    return panel.URL()
+  }
+
+  return null
+}
+
 export function showSaveDirectoryDialog(params) {
   const panel = NSOpenPanel.openPanel()
   panel.prompt = "Export"

@@ -5,9 +5,10 @@ import * as ui from './UI';
 // documentation: https://developer.sketchapp.com/reference/api/
 
 export function exportAsMarkdownTable(context) {
+  const templateURL = context.plugin.urlForResourceNamed("Templates/markdown_table.mustache")
   const option = {
     "isClipboardAvailable": true,
-    "mustacheTemplateFilePath": "Templates/markdown_table.mustache",
+    "mustacheTemplateFileURL": templateURL,
     "defaultFileName": "plugin_informations.md",
     "escapeFunction": (text) => {
       return String(text).replaceAll('|', '\\|')
@@ -17,9 +18,10 @@ export function exportAsMarkdownTable(context) {
 }
 
 export function exportAsCSV(context) {
+  const templateURL = context.plugin.urlForResourceNamed("Templates/csv.mustache");
   const option = {
     "isClipboardAvailable": true,
-    "mustacheTemplateFilePath": "Templates/csv.mustache",
+    "mustacheTemplateFileURL": templateURL,
     "defaultFileName": "plugin_informations.csv",
     "escapeFunction": (text) => {
       return String(text).replaceAll('"', '""')
@@ -29,13 +31,28 @@ export function exportAsCSV(context) {
 }
 
 export function exportAsBacklogTable(context) {
+  const templateURL = context.plugin.urlForResourceNamed("Templates/backlog_table.mustache");
   const option = {
     "isClipboardAvailable": true,
-    "mustacheTemplateFilePath": "Templates/backlog_table.mustache",
+    "mustacheTemplateFileURL": templateURL,
     "defaultFileName": "plugin_informations.txt",
     "escapeFunction": (text) => {
       return String(text).replaceAll('|', '\\\\|')
     }
+  }
+  exportAs(context, option);
+}
+
+export function exportUsingCustomTemplate(context) {
+  const fileURL = ui.showSelectFileDialog();
+  if (fileURL === null || fileURL === undefined) {
+    return ;
+  }
+
+  const option = {
+    "isClipboardAvailable": true,
+    "mustacheTemplateFileURL": fileURL.URLByStandardizingPath(),
+    "defaultFileName": "plugin_informations.txt"
   }
   exportAs(context, option);
 }
@@ -53,20 +70,33 @@ function exportAs(context,option) {
   }
 
   const manager = AppController.sharedInstance().pluginManager();
-  const templateURL = context.plugin.urlForResourceNamed(option.mustacheTemplateFilePath)
+  const templateURL = option.mustacheTemplateFileURL;
   const template = fs.readFileSync(templateURL.path())
   const plugins = manager.enabledPlugins()
   const mappedPlugins = Array.from(plugins).map(plugin => {
     return {
-      "name": plugin.name(),
-      "version": plugin.version(),
+      "appcastURL": plugin.appcastURL(),
+      "author": plugin.author(),
+      "authorEmail": plugin.authorEmail(),
+      "compatibleVersion": plugin.compatibleVersion(),
+      "enabled": plugin.enabled,
       "homepageURL": plugin.homepageURL(),
-      "author": plugin.author()
+      "identifier": plugin.identifier(),
+      "maximumCompatibleVersion": plugin.maximumCompatibleVersion(),
+      "name": plugin.name(),
+      "pluginDescription": plugin.pluginDescription(),
+      "suppliesData": plugin.suppliesData(),
+      "url": plugin.url(),
+      "version": plugin.version(),
     }
   })
 
   mappedPlugins.sort((a, b) => a.name > b.name)
-  mustache.escape = option.escapeFunction
+
+  if (option.escapeFunction === undefined || option.escapeFunction === null) {
+  } else {
+    mustache.escape = option.escapeFunction;
+  }
 
   const rendered = mustache.render(`${template}`, {
     "plugins": mappedPlugins

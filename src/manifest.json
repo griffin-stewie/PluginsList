@@ -20,6 +20,12 @@
       "identifier": "net.cyan-stivy.sketchPlugin.export-as-backlog-table",
       "handler": "exportAsBacklogTable",
       "script": "./main.js"
+    },
+    {
+      "name": "Export using custom template",
+      "identifier": "net.cyan-stivy.sketchPlugin.export-using-custom-template",
+      "handler": "exportUsingCustomTemplate",
+      "script": "./main.js"
     }
   ],
   "menu": {
@@ -27,7 +33,8 @@
     "items": [
       "net.cyan-stivy.sketchPlugin.export-as-csv",
       "net.cyan-stivy.sketchPlugin.export-as-markdown-table",
-      "net.cyan-stivy.sketchPlugin.export-as-backlog-table"
+      "net.cyan-stivy.sketchPlugin.export-as-backlog-table",
+      "net.cyan-stivy.sketchPlugin.export-using-custom-template"
     ]
   }
 }
